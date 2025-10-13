@@ -16,9 +16,9 @@ for person_name in os.listdir(dataset_dir):
     person_folder = os.path.join(dataset_dir, person_name)
     if not os.path.isdir(person_folder):
         continue
-    print(person_folder)
-    images = os.listdir(person_folder)
-    print(images)
+    images = [image for image in os.listdir(
+        person_folder) if not image.startswith('.')]
+    images.sort()
     train_images = images[:4]  # usa 4 para treino
     for img_name in train_images:
         img_path = os.path.join(person_folder, img_name)
@@ -31,7 +31,7 @@ for person_name in os.listdir(dataset_dir):
 # Teste na 5ª foto
 print("Testando reconhecimento...")
 for person_name in os.listdir(dataset_dir):
-    test_img_path = os.path.join(dataset_dir, person_name, "5.jpg")
+    test_img_path = os.path.join(dataset_dir, person_name, "05.jpg")
     test_img = face_recognition.load_image_file(test_img_path)
     test_encodings = face_recognition.face_encodings(test_img)
 
