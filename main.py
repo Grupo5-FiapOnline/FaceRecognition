@@ -1,5 +1,4 @@
 import face_recognition
-import cv2
 import os
 import numpy as np
 
@@ -8,7 +7,7 @@ dataset_dir = "dataset"
 known_encodings = []
 known_names = []
 
-# Treinamento com 4 fotos de cada pessoa
+# Treinamento
 for person_name in os.listdir(dataset_dir):
     if person_name.startswith('.'):
         # Ignorar arquivos ocultos/de sistema
@@ -28,7 +27,7 @@ for person_name in os.listdir(dataset_dir):
             known_encodings.append(encodings[0])
             known_names.append(person_name)
 
-# Teste na 5ª foto
+# Teste
 print("Testando reconhecimento...")
 for person_name in os.listdir(dataset_dir):
     test_img_path = os.path.join(dataset_dir, person_name, "05.jpg")
@@ -47,6 +46,6 @@ for person_name in os.listdir(dataset_dir):
     best_match_index = np.argmin(face_distances)
     if results[best_match_index]:
         print(
-            f"Reconhecido: {known_names[best_match_index]} como {person_name}")
+            f"Rosto reconhecido: {known_names[best_match_index]} como {person_name}")
     else:
         print(f"Falha ao reconhecer {person_name}")
