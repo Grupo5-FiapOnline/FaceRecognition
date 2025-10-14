@@ -8,13 +8,10 @@ known_encodings = []
 known_names = []
 
 # Treinamento
-for person_name in os.listdir(dataset_dir):
-    if person_name.startswith('.'):
-        # Ignorar arquivos ocultos/de sistema
-        continue
+dirs = [dir for dir in os.listdir(dataset_dir) if os.path.isdir(os.path.join(dataset_dir, dir)) and not dir.startswith('.')]
+print(dirs)
+for person_name in dirs:
     person_folder = os.path.join(dataset_dir, person_name)
-    if not os.path.isdir(person_folder):
-        continue
     images = [image for image in os.listdir(
         person_folder) if not image.startswith('.')]
     images.sort()
@@ -29,7 +26,7 @@ for person_name in os.listdir(dataset_dir):
 
 # Teste
 print("Testando reconhecimento...")
-for person_name in os.listdir(dataset_dir):
+for person_name in dirs:
     test_img_path = os.path.join(dataset_dir, person_name, "05.jpg")
     test_img = face_recognition.load_image_file(test_img_path)
     test_encodings = face_recognition.face_encodings(test_img)
